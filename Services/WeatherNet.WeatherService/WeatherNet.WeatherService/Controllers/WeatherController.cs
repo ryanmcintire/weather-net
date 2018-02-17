@@ -4,18 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WeatherNet.WeatherService.Services;
 
 namespace WeatherNet.WeatherService.Controllers
 {
     [Produces("application/json")]
-    [Route("api/v1/Weather")]
+    [Route("api/v1/[controller]")]
     public class WeatherController : Controller
     {
+        private readonly WeatherApiService weatherService;
+
+        public WeatherController()
+        {
+            this.weatherService = new WeatherApiService();
+        }
+
         // GET: api/Weather
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
+        public async Task<IActionResult> GetAsync() {
+            var result = await weatherService.GetPastWeekWeatherAsync();
+            return Ok(result);
         }
 
         // GET: api/Weather/5
