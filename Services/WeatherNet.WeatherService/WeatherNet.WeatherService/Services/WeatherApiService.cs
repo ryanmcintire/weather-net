@@ -30,12 +30,11 @@ namespace WeatherNet.WeatherService.Services
             DateTime today = DateTime.Today;
             var responseList = new List<WeatherResponse>();
             for (int index = 0; index > -7; index--) {
-                //todo - create response with http response status indication
                 var response = await this.GetWeatherForDay(today.AddDays(index), geoPair);
+                // todo - implement retry logic mechanism. 
                 if (response == null) return null;
                 responseList.Add(response);
             }
-            
             return responseList;
         }
 
