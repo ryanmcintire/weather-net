@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WeatherNet.WeatherService.Models;
 using WeatherNet.WeatherService.Services;
 
 namespace WeatherNet.WeatherService.Controllers
@@ -21,34 +22,12 @@ namespace WeatherNet.WeatherService.Controllers
 
         // GET: api/Weather
         [HttpGet]
-        public async Task<IActionResult> GetAsync() {
-            var result = await weatherService.GetPastWeekWeatherAsync();
-            return Ok(result);
-        }
-
-        // GET: api/Weather/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-        
-        // POST: api/Weather
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-        
-        // PUT: api/Weather/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-        
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+        public async Task<IActionResult> GetAsync([FromQuery]string latitude, [FromQuery]string longitude) {
+            var geoPair = GeoPairFactory.GetGeoPair(latitude, longitude);
+            if (geoPair == null) return this.BadRequest();
+            var result = await weatherService.GetPastWeekWeatherAsync(geoPair);
+            if (result == null) return this.BadRequest();
+            return this.Ok(result);
         }
     }
 }

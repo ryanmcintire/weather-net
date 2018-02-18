@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WeatherNet.WeatherService.Models;
+using WeatherNet.WeatherService.Extensions;
 
 namespace WeatherNet.WeatherService.Services
 {
@@ -18,16 +19,19 @@ namespace WeatherNet.WeatherService.Services
     {
         // todo - remvove
         private readonly string key = "/9b3ad653fd2a458c74b5c1e52073c1c5";
+
+        // todo - remove
+        // private readonly string geoKey = "AIzaSyB07s3Cqs3cY84lN6Tj1JCaMOUVPk-7PHI";
         private readonly string baseUrl = "https://api.darksky.net";
         private readonly string forecastPath = "/forecast";
 
 
-        public async Task<List<WeatherResponse>> GetPastWeekWeatherAsync() {
+        public async Task<List<WeatherResponse>> GetPastWeekWeatherAsync(GeoPair geoPair) {
             DateTime today = DateTime.Today;
             var responseList = new List<WeatherResponse>();
             for (int index = 0; index > -7; index--) {
                 //todo - create response with http response status indication
-                var response = await this.GetWeatherForDay(today.AddDays(index));
+                var response = await this.GetWeatherForDay(today.AddDays(index), geoPair);
                 if (response == null) return null;
                 responseList.Add(response);
             }
@@ -35,8 +39,8 @@ namespace WeatherNet.WeatherService.Services
             return responseList;
         }
 
-        public async Task<WeatherResponse> GetWeatherForDay(DateTime day) {
-            var url = this.BuildUrl("37", "-122.32");
+        public async Task<WeatherResponse> GetWeatherForDay(DateTime day, GeoPair geoPair) {
+            var url = this.BuildUrl(day, geoPair);
             var client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode) {
@@ -46,11 +50,8 @@ namespace WeatherNet.WeatherService.Services
             return null;
         }
 
-        private string BuildUrl(string latitude, string longitude) {
-            DateTime today = DateTime.Today;
-            DateTimeOffset offset = new DateTimeOffset(today);
-            string sinceEpoch = offset.ToUnixTimeSeconds().ToString();
-            return $"{this.baseUrl}{this.forecastPath}{this.key}/{latitude},{longitude},{sinceEpoch}";
+        private string BuildUrl(DateTime day, GeoPair geoPair) {
+            return $"{this.baseUrl}{this.forecastPath}{this.key}/{geoPair.Latitude},{geoPair.Longitude},{day.ToUnixTimeSeconds()}";
         }
     }
 
