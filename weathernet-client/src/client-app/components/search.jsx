@@ -4,8 +4,6 @@ import { bindActionCreators } from "redux";
 
 import {getWeather} from '../actions/weather-actions';
 
-
-
 class Search extends React.Component {
 
   constructor(props) {
