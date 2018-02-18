@@ -19,9 +19,15 @@ class Search extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps);
-    console.log(this.props.geoData);
-    console.log('Geodata^^^^');
+    const {dispatchGetWeather, search} = this.props.geoData;
+    if (dispatchGetWeather) {
+      this.dispatchGetWeather(search);
+    }
+  }
+
+  dispatchGetWeather(search) {
+    const {lat, lng} = search.results[0].geometry.location;
+    this.props.getWeather(lat, lng);
   }
 
   onSearchInputChange(e) {
