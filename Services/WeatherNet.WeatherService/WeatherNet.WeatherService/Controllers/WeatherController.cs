@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WeatherNet.WeatherService.Abstractions.Services;
 using WeatherNet.WeatherService.Models;
 using WeatherNet.WeatherService.Services;
 
@@ -13,14 +14,13 @@ namespace WeatherNet.WeatherService.Controllers
     [Route("api/v1/[controller]")]
     public class WeatherController : Controller
     {
-        private readonly WeatherApiService weatherService;
+        private readonly IWeatherService weatherService;
 
-        public WeatherController()
+        public WeatherController(IWeatherService weatherService)
         {
-            this.weatherService = new WeatherApiService();
+            this.weatherService = weatherService;
         }
 
-        // GET: api/Weather
         [HttpGet]
         public async Task<IActionResult> GetAsync([FromQuery]string latitude, [FromQuery]string longitude) {
             var geoPair = GeoPairFactory.GetGeoPair(latitude, longitude);

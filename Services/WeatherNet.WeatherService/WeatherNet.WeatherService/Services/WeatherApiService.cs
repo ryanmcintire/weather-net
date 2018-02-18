@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WeatherNet.WeatherService.Models;
 using WeatherNet.WeatherService.Extensions;
+using WeatherNet.WeatherService.Abstractions.Services;
 
 namespace WeatherNet.WeatherService.Services
 {
@@ -15,7 +16,7 @@ namespace WeatherNet.WeatherService.Services
     // secret key for cheat reference - 9b3ad653fd2a458c74b5c1e52073c1c5
     // TODO - remove
 
-    public class WeatherApiService
+    public class WeatherApiService : IWeatherService
     {
         // todo - remvove
         private readonly string key = "/9b3ad653fd2a458c74b5c1e52073c1c5";

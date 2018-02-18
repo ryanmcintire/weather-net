@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using WeatherNet.WeatherService.Abstractions.Services;
+using WeatherNet.WeatherService.Services;
 
 namespace WeatherNet.WeatherService
 {
@@ -24,6 +26,8 @@ namespace WeatherNet.WeatherService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddTransient<IWeatherService, WeatherApiService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
