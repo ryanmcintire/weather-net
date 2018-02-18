@@ -11,7 +11,7 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: ''
+      query: ''
     }
 
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
@@ -19,13 +19,13 @@ class Search extends React.Component {
   }
 
   onSearchInputChange(e) {
-    this.setState({searchTerm: e.target.value});
+    this.setState({query: e.target.value});
   }
 
   handleSearchSubmit(e) {
     e.preventDefault();
-    this.props.getWeather(this.state.searchTerm);
-    this.setState({searchTerm: ''});
+    this.props.getWeather(this.state.query);
+    this.setState({query: ''});
   }
 
   render() {
@@ -36,7 +36,7 @@ class Search extends React.Component {
             type="text"
             className="form-control"
             placeholder="Search for location."
-            value={this.state.searchTerm}
+            value={this.state.query}
             onChange={this.onSearchInputChange}
           />
         </div>

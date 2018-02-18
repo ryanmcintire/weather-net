@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using WeatherNet.GeoDataService.Abstractions.Services;
+using WeatherNet.GeoDataService.Services;
 
 namespace WeatherNet.GeoDataService
 {
@@ -34,6 +36,8 @@ namespace WeatherNet.GeoDataService
             });
 
             services.AddMvc();
+
+            services.AddTransient<IGeoDataService, GoogleGeoDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

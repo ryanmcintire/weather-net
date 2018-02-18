@@ -21,8 +21,6 @@ namespace WeatherNet.WeatherService.Services
         // todo - remvove
         private readonly string key = "/9b3ad653fd2a458c74b5c1e52073c1c5";
 
-        // todo - remove
-        // private readonly string geoKey = "AIzaSyB07s3Cqs3cY84lN6Tj1JCaMOUVPk-7PHI";
         private readonly string baseUrl = "https://api.darksky.net";
         private readonly string forecastPath = "/forecast";
 
