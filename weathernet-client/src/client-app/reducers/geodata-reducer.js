@@ -6,7 +6,7 @@ export default function(state = {}, action) {
       console.log('In search reducer');
       return {
         ...state,
-        geodata: action.payload.data
+        search: action.payload.data
       };
     default: 
       return state;

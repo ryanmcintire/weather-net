@@ -3,17 +3,25 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import {getWeather} from '../actions/weather-actions';
+import {getLocationSearch} from '../actions/geodata-actions';
 
 class Search extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
-    }
+      query: '',
+      searchPending: false
+    };
 
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.onSearchInputChange = this.onSearchInputChange.bind(this);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevProps);
+    console.log(this.props.geoData);
+    console.log('Geodata^^^^');
   }
 
   onSearchInputChange(e) {
@@ -22,8 +30,12 @@ class Search extends React.Component {
 
   handleSearchSubmit(e) {
     e.preventDefault();
-    this.props.getWeather(this.state.query);
-    this.setState({query: ''});
+    this.props.getLocationSearch(this.state.query);
+    //this.props.getWeather(this.state.query);
+    this.setState({
+      query: '',
+      searchPending: true
+    });
   }
 
   render() {
@@ -43,11 +55,16 @@ class Search extends React.Component {
             Fetch
           </button>
         </div>
+        {/* <div className="container">
+          {this.props.geoData}
+        </div> */}
       </form>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({getWeather}, dispatch);
+const mapStateToProps = ({geoData}) => ({geoData});
 
-export default connect(null, mapDispatchToProps)(Search);
+const mapDispatchToProps = dispatch => bindActionCreators({getWeather, getLocationSearch}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
