@@ -13,6 +13,7 @@ namespace WeatherNet.GeoDataService
 {
     public class Startup
     {
+        const string CORS_POLICY = "CorsPolicy";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,6 +24,15 @@ namespace WeatherNet.GeoDataService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // definitely wouldn't have it configured so in a real-world app.
+            services.AddCors(options => {
+                options.AddPolicy(CORS_POLICY, 
+                builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()   
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             services.AddMvc();
         }
 
@@ -33,6 +43,8 @@ namespace WeatherNet.GeoDataService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(CORS_POLICY);
 
             app.UseMvc();
         }
