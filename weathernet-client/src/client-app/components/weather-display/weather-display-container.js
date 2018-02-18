@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import moment from 'moment';
 
 class WeatherDisplayContainer extends React.Component {
 
@@ -50,9 +51,10 @@ class WeatherDisplayContainer extends React.Component {
       temperatureHigh, 
       temperatureLow, 
       time} = weatherRowData.daily.data[0];
+    let day = moment(Number(time)*1000);
     return (
       <tr key={time}>
-        <th scope="row">{time}</th>
+        <th scope="row">{day.format("MMMM Do YYYY")}</th>
         <td>{summary}</td>
         <td>{temperatureHigh}</td>
         <td>{temperatureLow}</td>
