@@ -19,6 +19,7 @@ namespace WeatherNet.WeatherService.Models
 
         public static GeoPair GetGeoPair(string latitude, string longitude) {
             try {
+                if (latitude == null || longitude == null) throw new FormatException();
                 var latDouble = Convert.ToDouble(latitude);
                 var longDouble = Convert.ToDouble(longitude);
                 return new GeoPair(latDouble, longDouble);

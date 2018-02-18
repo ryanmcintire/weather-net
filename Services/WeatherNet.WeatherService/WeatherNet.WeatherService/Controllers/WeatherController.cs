@@ -16,17 +16,20 @@ namespace WeatherNet.WeatherService.Controllers
     {
         private readonly IWeatherService weatherService;
 
-        public WeatherController(IWeatherService weatherService)
-        {
+        public WeatherController(IWeatherService weatherService) {
             this.weatherService = weatherService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAsync([FromQuery]string latitude, [FromQuery]string longitude) {
             var geoPair = GeoPairFactory.GetGeoPair(latitude, longitude);
-            if (geoPair == null) return this.BadRequest();
-            var result = await weatherService.GetPastWeekWeatherAsync(geoPair);
-            if (result == null) return this.BadRequest();
+            if (geoPair == null) return this.BadRequest(new {
+                Error = "Improper parameters set."
+            });
+            List<WeatherResponse> result = await weatherService.GetPastWeekWeatherAsync(geoPair);
+            if (result == null) return this.BadRequest(new {
+                Error = "Unable to get weather data."
+            });
             return this.Ok(result);
         }
     }
