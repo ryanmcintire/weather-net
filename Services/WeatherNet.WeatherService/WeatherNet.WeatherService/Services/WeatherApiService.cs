@@ -19,7 +19,7 @@ namespace WeatherNet.WeatherService.Services
     public class WeatherApiService : IWeatherService
     {
         // todo - remvove
-        private readonly string key = "/9b3ad653fd2a458c74b5c1e52073c1c5";
+        private readonly string key = "/c0dfbe1aefea1cf7a3f7c1acd1811a4d";
 
         private readonly string baseUrl = "https://api.darksky.net";
         private readonly string forecastPath = "/forecast";

@@ -26,7 +26,7 @@ export default class WeatherDisplayTable extends React.Component {
       <div>
         <div className="row">
           <div className="container weather-title">
-            <h1 className="text-center">Showing weather!</h1>
+            <h3 className="text-center">Showing last week's weather for {this.props.location}</h3>
           </div>
         </div>
         <div className="row">

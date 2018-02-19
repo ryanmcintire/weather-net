@@ -1,45 +1,49 @@
 import {
   LOCATION_SEARCH_PENDING,
   LOCATION_SEARCH_FAILURE,
-  LOCATION_SEARCH_SUCCESS
-} from '../actions/geodata-actions';
+  LOCATION_SEARCH_SUCCESS,
+  NO_RESULTS_FOUND
+} from "../actions/geodata-actions";
 
 import {
   GET_WEATHER_PENDING,
-  GET_WEATHER_FAILURE,
-  GET_WEATHER_SUCCESS 
-} from '../actions/weather-actions';
+} from "../actions/weather-actions";
 
 const initialState = {
   geoSearchPending: false,
   searchError: false,
-  getWeatherPending: false, //todo - potentiall clean up.
   dispatchGetWeather: false,
-  search: {}
-}
+  anySearchSubmitted: false,
+  search: {},
+  submittedQuery: ""
+};
 
 export default (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case LOCATION_SEARCH_PENDING:
-      return {...state, geoSearchPending: true, searchError: false}; // todo - add the other items.
+      return {
+        ...state,
+        anySearchSubmitted: true,
+        geoSearchPending: true,
+        searchError: false,
+        submittedQuery: action.query,
+        failedQuery:''
+      }; // todo - add the other items.
     case LOCATION_SEARCH_SUCCESS:
-      return {...state, geoSearchPending: false, search: action.payload, searchError: false, getWeatherPending: true, dispatchGetWeather: true}
+      return {
+        ...state,
+        geoSearchPending: false,
+        search: action.payload,
+        searchError: false,
+        dispatchGetWeather: true
+      };
     case LOCATION_SEARCH_FAILURE:
-      return {...state, geoSearchPending: false, searchError: true} // todo - add the other items.
-    default: 
+      return { ...state, geoSearchPending: false, searchError: true }; // todo - add the other items.
+    case NO_RESULTS_FOUND:
+      return {...state, failedQuery: action.failedQuery, dispatchGetWeather: false}
+    case GET_WEATHER_PENDING:
+      return { ...state, dispatchGetWeather: false };
+    default:
       return state;
   }
-}
-
-// export default function(state = {}, action) {
-//   switch (action.type) {
-//     case GET_LOCATION_SEARCH:
-//       console.log('In search reducer');
-//       return {
-//         ...state,
-//         search: action.payload.data
-//       };
-//     default: 
-//       return state;
-//   }
-// }
+};
