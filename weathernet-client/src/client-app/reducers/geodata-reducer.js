@@ -1,10 +1,14 @@
-//import {GET_LOCATION_SEARCH} from '../actions/geodata-actions';
-
 import {
   LOCATION_SEARCH_PENDING,
   LOCATION_SEARCH_FAILURE,
   LOCATION_SEARCH_SUCCESS
 } from '../actions/geodata-actions';
+
+import {
+  GET_WEATHER_PENDING,
+  GET_WEATHER_FAILURE,
+  GET_WEATHER_SUCCESS 
+} from '../actions/weather-actions';
 
 const initialState = {
   geoSearchPending: false,

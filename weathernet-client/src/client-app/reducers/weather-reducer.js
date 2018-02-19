@@ -1,14 +1,38 @@
-import {GET_WEATHER} from '../actions/weather-actions';
+import {
+  GET_WEATHER_PENDING,
+  GET_WEATHER_FAILURE,
+  GET_WEATHER_SUCCESS 
+} from '../actions/weather-actions';
 
-export default function(state = {}, action) {
-  switch (action.type) {
-    case GET_WEATHER: 
-      console.log('In weather reducer');
-      return {
-        ...state,
-        weather: action.payload.data
-      }
+
+const initialState = {
+  weather: [],
+  getWeatherPending: false,
+  getWeatherError: false
+};
+
+export default (state = initialState, action) => {
+  switch(action.type) {
+    case GET_WEATHER_PENDING:
+      return {...state, getWeatherPending: true, getWeatherError: false}; // todo - add the other items.
+    case GET_WEATHER_SUCCESS:
+      return {...state, getWeatherPending: false, weather: action.payload, getWeatherError: false}
+    case GET_WEATHER_FAILURE:
+      return {...state, getWeatherPending: false, getWeatherError: true} // todo - add the other items.
     default: 
       return state;
   }
 }
+
+// export default function(state = {}, action) {
+//   switch (action.type) {
+//     case GET_WEATHER: 
+//       console.log('In weather reducer');
+//       return {
+//         ...state,
+//         weather: action.payload.data
+//       }
+//     default: 
+//       return state;
+//   }
+// }
