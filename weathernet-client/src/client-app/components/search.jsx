@@ -67,12 +67,14 @@ class Search extends React.Component {
 
   render() {
     return (
-      <form className="form-inline" onSubmit={this.handleSearchSubmit}>
-        <div className="form-group mb-3">
+      <div className="container">
+      <form onSubmit={this.handleSearchSubmit}>
+
+        <div className="form-group mb-3 search-input-container">
           <input
             type="text"
-            className="form-control"
-            placeholder="Search for location (e.g., 'What Cheer, Iowa'."
+            className="form-control search-input"
+            placeholder="Search for location (e.g., 'What Cheer, Iowa')."
             value={this.state.query}
             onChange={this.onSearchInputChange}
             disabled={this.isInputDisabled()}
@@ -85,6 +87,7 @@ class Search extends React.Component {
           </button>
         </div>
       </form>
+      </div>
     );
   }
 }

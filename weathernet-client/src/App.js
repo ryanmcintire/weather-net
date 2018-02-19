@@ -1,7 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
-import ReduxPromise from "redux-promise"; // todo - remove
 import ReduxThunk from "redux-thunk";
 
 import "./App.css";
