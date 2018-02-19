@@ -1,18 +1,27 @@
 import React from "react";
-import { connect } from "react-redux";
-import moment from 'moment';
+import moment from "moment";
 
-class WeatherDisplayContainer extends React.Component {
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log(this.props);
-  }
-
+export default class WeatherDisplayTable extends React.Component {
   render() {
+    return this.props.weather &&
+      this.props.weather.length > 0
+      ? this.renderWeatherDisplayTable()
+      : this.renderNoData();
+  }
+
+  renderNoData() {
+    return (
+      <div>
+        <div className="row">
+          <div className="container">
+            <h3 className="no-weather text-center">No weather data to show.</h3>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderWeatherDisplayTable() {
     return (
       <div>
         <div className="row">
@@ -32,11 +41,7 @@ class WeatherDisplayContainer extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {
-                  this.props.weather.length > 0 ? 
-                    this.props.weather.map(this.renderWeatherTableRow) :
-                    ""  // todo - fix 
-                }
+                {this.props.weather.map(this.renderWeatherTableRow)}
               </tbody>
             </table>
           </div>
@@ -48,10 +53,11 @@ class WeatherDisplayContainer extends React.Component {
   renderWeatherTableRow(weatherRowData) {
     const {
       summary,
-      temperatureHigh, 
-      temperatureLow, 
-      time} = weatherRowData.daily.data[0];
-    let day = moment(Number(time)*1000);
+      temperatureHigh,
+      temperatureLow,
+      time
+    } = weatherRowData.daily.data[0];
+    let day = moment(Number(time) * 1000);
     return (
       <tr key={time}>
         <th scope="row">{day.format("MMMM Do YYYY")}</th>
@@ -59,14 +65,6 @@ class WeatherDisplayContainer extends React.Component {
         <td>{temperatureHigh}</td>
         <td>{temperatureLow}</td>
       </tr>
-    )
+    );
   }
 }
-
-const mapStateToProps = ({weatherData}) => {
-  const weather = weatherData.weather || [];    // todo - configure initial state
-  console.log(weather);
-  return {weather};
-}
-
-export default connect(mapStateToProps)(WeatherDisplayContainer);

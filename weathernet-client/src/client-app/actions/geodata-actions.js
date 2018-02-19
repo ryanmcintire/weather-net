@@ -6,8 +6,8 @@ export const LOCATION_SEARCH_FAILURE = "LOCATION_SEARCH_FAILED";
 export const LOCATION_SEARCH_SUCCESS = "LOCATION_SEARCH_SUCCESS";
 
 export const getLocationSearch = query => dispatch => {
-  //const url = `http://localhost:5000/api/v1/geodata?query=${query}`;
-  const url = `http://localhost:5000/api/v1/geodata?query=mexico`;
+  const url = `http://localhost:5000/api/v1/geodata?query=${query}`;
+  //const url = `http://localhost:5000/api/v1/geodata?query=mexico`;
   dispatch({ type: LOCATION_SEARCH_PENDING });
 
   axios
