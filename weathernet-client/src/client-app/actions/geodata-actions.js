@@ -7,7 +7,10 @@ export const LOCATION_SEARCH_SUCCESS = "LOCATION_SEARCH_SUCCESS";
 export const NO_RESULTS_FOUND = "NO_RESULTS_FOUND";
 
 export const getLocationSearch = query => dispatch => {
-  const url = `http://localhost:5000/api/v1/geodata?query=${query}`;
+  const baseUrl = 'https://rbm-ws-geodata-service.appspot.com';
+  const geoDataPath = '/api/v1/geodata';
+  const url = `${baseUrl}${geoDataPath}?query=${query}`
+  // const url = `http://localhost:5000/api/v1/geodata?query=${query}`;
   dispatch({ type: LOCATION_SEARCH_PENDING, query });
 
   axios

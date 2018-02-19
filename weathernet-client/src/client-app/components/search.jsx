@@ -74,7 +74,7 @@ class Search extends React.Component {
           <input
             type="text"
             className="form-control search-input"
-            placeholder="Search for location (e.g., 'What Cheer, Iowa')."
+            placeholder="Search for location (e.g., 'What Cheer, Iowa' or 'Wigglesworth, England')."
             value={this.state.query}
             onChange={this.onSearchInputChange}
             disabled={this.isInputDisabled()}
